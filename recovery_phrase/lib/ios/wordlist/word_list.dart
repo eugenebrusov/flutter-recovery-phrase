@@ -1,11 +1,8 @@
 
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recovery_phrase/bloc/wordlist/word_list_bloc.dart';
-import 'package:recovery_phrase/data/model/resource.dart';
 import 'package:recovery_phrase/ios/common/SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight.dart';
 import 'package:recovery_phrase/ios/theme.dart' as Theme;
 import 'package:recovery_phrase/localizations/localizations.dart';
@@ -39,23 +36,18 @@ class WordList extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: StreamBuilder<Resource<List<WordUiModel>>>(
-                        stream: Provider.of<WordListBloc>(context, listen: false).uiModelsStream,
+                      child: StreamBuilder<WordsUiModel>(
+                        stream: Provider.of<WordListBloc>(context, listen: false).wordsUiModelStream,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            final Resource<List<WordUiModel>> resource = snapshot.data;
-                            if (resource is Success<List<WordUiModel>>) {
-                              return _buildWordListSuccess(context, resource.data);
-                            } else if (resource is Loading) {
-                              return _buildWordListLoading(context);
-                            } else if (resource is Error) {
-                              return _buildWordListError(context, resource);
+                            final WordsUiModel uiModel = snapshot.data;
+                            if (uiModel is WordsSuccessUiModel) {
+                              return _buildWordsListSuccess(context, uiModel);
+                            } else if (uiModel is WordsErrorUiModel) {
+                              return _buildWordsListError(context, uiModel);
                             }
-                          } else if (snapshot.hasError) {
-                            return _buildWordListError(context, snapshot.error);
                           }
-
-                          return _buildWordListLoading(context);
+                          return _buildWordsListLoading(context);
                         },
                       ),
                     ),
@@ -87,7 +79,7 @@ class WordList extends StatelessWidget {
     );
   }
 
-  Widget _buildWordListSuccess(BuildContext context, List<WordUiModel> uiModels) {
+  Widget _buildWordsListSuccess(BuildContext context, WordsSuccessUiModel uiModel) {
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
@@ -103,14 +95,14 @@ class WordList extends StatelessWidget {
               height: 32.0
           ),
           physics: NeverScrollableScrollPhysics(),
-          itemCount: 12,
-          itemBuilder: (context, index) => _buildTile(context, uiModels[index]),
+          itemCount: uiModel.items.length,
+          itemBuilder: (context, index) => _buildTile(context, uiModel.items[index]),
         ),
       ),
     );
   }
 
-  Widget _buildWordListLoading(BuildContext context) {
+  Widget _buildWordsListLoading(BuildContext context) {
     return Center(
       child: CupertinoActivityIndicator(
         animating: true,
@@ -119,26 +111,26 @@ class WordList extends StatelessWidget {
     );
   }
 
-  Widget _buildWordListError(BuildContext context, dynamic error) {
+  Widget _buildWordsListError(BuildContext context, WordsErrorUiModel uiModel) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-            AppLocalizations.unknownError,
+            uiModel.errorDescription,
             textAlign: TextAlign.center,
             style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
         ),
         CupertinoButton(
           child: Text(AppLocalizations.retry),
           onPressed: () {
-            Provider.of<WordListBloc>(context, listen: false).retry();
+            uiModel.retryAction();
           },
         )
       ],
     );
   }
 
-  Widget _buildTile(BuildContext context, WordUiModel uiModel) {
+  Widget _buildTile(BuildContext context, WordItemUiModel uiModel) {
     return Row(
       children: <Widget>[
         Text(
