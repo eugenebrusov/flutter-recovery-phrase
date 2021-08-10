@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:recovery_phrase/ios/common/SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight.dart';
 import 'package:recovery_phrase/ios/theme.dart' as Theme;
 import 'package:recovery_phrase/localizations/localizations.dart';
 
@@ -29,16 +30,31 @@ class WordList extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
-                child: Container(
-                  padding: const EdgeInsets.all(15.0),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF1B2540),
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))
-                  ),
-                  child: Text(
-                      AppLocalizations.phraseDescription,
-                      style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
-                  ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color(0xFF1B2540),
+                            borderRadius: BorderRadius.all(Radius.circular(8.0))
+                        ),
+                        child: SizedBox(
+                          height: 160.0,
+                          child: GridView.builder(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10.0,
+                              height: 32.0
+                            ),
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: 12,
+                            itemBuilder: (context, index) => _buildTileWidget(context, index),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -63,6 +79,24 @@ class WordList extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+
+  Widget _buildTileWidget(BuildContext context, int index) {
+    return Row(
+      children: <Widget>[
+        Text(
+          '$index',
+          style: Theme.CupertinoTheme.of(context).textTheme.caption1TextStyle,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(
+            'Item $index',
+            style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle,
+          ),
+        )
+      ]
     );
   }
 }

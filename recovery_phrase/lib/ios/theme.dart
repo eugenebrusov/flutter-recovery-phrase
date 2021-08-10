@@ -46,6 +46,7 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
     TextStyle dateTimePickerTextStyle,
     @required this.largeTitleTextStyle,
     @required this.title1TextStyle,
+    @required this.caption1TextStyle,
   }) : super(
       primaryColor: primaryColor,
       textStyle: textStyle,
@@ -59,6 +60,7 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
 
   final TextStyle largeTitleTextStyle;
   final TextStyle title1TextStyle;
+  final TextStyle caption1TextStyle;
 }
 
 /// Defines text geometry
@@ -82,9 +84,17 @@ class _CupertinoTypography {
     fontWeight: FontWeight.normal,
   );
 
+  static const TextStyle _caption1TextStyle = TextStyle(
+    color: _CupertinoColors.primary,
+    fontSize: 12,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.normal,
+  );
+
   static const CupertinoTextThemeData textThemeData = CupertinoTextThemeData(
     largeTitleTextStyle: _largeTitleTextStyle,
     title1TextStyle: _title1TextStyle,
+    caption1TextStyle: _caption1TextStyle
   );
 }
 
