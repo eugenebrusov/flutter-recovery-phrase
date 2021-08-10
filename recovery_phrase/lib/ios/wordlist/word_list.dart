@@ -7,7 +7,7 @@ class WordList extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: Container(
-        child: Text('Kuku'),
+        child: Text('Write down your recovery phrase', style: CupertinoTypography.largeTitleTextStyle),
       ),
     );
   }

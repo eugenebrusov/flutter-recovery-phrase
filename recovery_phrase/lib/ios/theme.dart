@@ -9,7 +9,7 @@ class CupertinoThemeData extends System.CupertinoThemeData {
     Color primaryContrastingColor,
     CupertinoTextThemeData textTheme = const CupertinoTextThemeData(),
     Color barBackgroundColor,
-    Color scaffoldBackgroundColor = _CupertinoColors.onScaffoldBackground100
+    Color scaffoldBackgroundColor = _CupertinoColors.scaffoldBackground
   }) : super(
       brightness: brightness,
       primaryColor: primaryColor,
@@ -71,7 +71,7 @@ class CupertinoTypography {
 class _CupertinoColors {
   _CupertinoColors._();
 
-  static const Color scaffoldBackground = Color(0x0D1323FF);
+  static const Color scaffoldBackground = Color(0xFF0D1323);
 
   static const Color onScaffoldBackground100 = Color(0xFFFFFFFF);
 }
