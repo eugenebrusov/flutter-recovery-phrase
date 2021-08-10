@@ -70,7 +70,7 @@ class WordList extends StatelessWidget {
                       Expanded(
                         child: CupertinoButton.filled(
                           borderRadius: BorderRadius.circular(30.0),
-                          child: Text('Confirm Backup'),
+                          child: Text(AppLocalizations.confirmBackup),
                           onPressed: () {
 
                           },
@@ -88,8 +88,6 @@ class WordList extends StatelessWidget {
   }
 
   Widget _buildWordListSuccess(BuildContext context, List<WordUiModel> uiModels) {
-    log("My Logg");
-    print("My print");
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
@@ -106,7 +104,7 @@ class WordList extends StatelessWidget {
           ),
           physics: NeverScrollableScrollPhysics(),
           itemCount: 12,
-          itemBuilder: (context, index) => _buildTileWidget(context, uiModels[index]),
+          itemBuilder: (context, index) => _buildTile(context, uiModels[index]),
         ),
       ),
     );
@@ -127,10 +125,11 @@ class WordList extends StatelessWidget {
       children: <Widget>[
         Text(
             AppLocalizations.unknownError,
+            textAlign: TextAlign.center,
             style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
         ),
         CupertinoButton(
-          child: Text('Retry'),
+          child: Text(AppLocalizations.retry),
           onPressed: () {
             Provider.of<WordListBloc>(context, listen: false).retry();
           },
@@ -139,7 +138,7 @@ class WordList extends StatelessWidget {
     );
   }
 
-  Widget _buildTileWidget(BuildContext context, WordUiModel uiModel) {
+  Widget _buildTile(BuildContext context, WordUiModel uiModel) {
     return Row(
       children: <Widget>[
         Text(
