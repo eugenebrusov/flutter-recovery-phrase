@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:recovery_phrase/bloc/wordlist/word_list_bloc.dart';
@@ -85,6 +87,8 @@ class WordList extends StatelessWidget {
   }
 
   Widget _buildWordListSuccess(BuildContext context, List<WordUiModel> uiModels) {
+    log("My Logg");
+    print("My print");
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
@@ -101,27 +105,30 @@ class WordList extends StatelessWidget {
           ),
           physics: NeverScrollableScrollPhysics(),
           itemCount: 12,
-          itemBuilder: (context, index) => _buildTileWidget(context, index),
+          itemBuilder: (context, index) => _buildTileWidget(context, uiModels[index]),
         ),
       ),
     );
   }
 
   Widget _buildWordListLoading(BuildContext context) {
-    return CupertinoActivityIndicator();
+    return CupertinoActivityIndicator(
+      animating: true,
+      radius: 20.0,
+    );
   }
 
-  Widget _buildTileWidget(BuildContext context, int index) {
+  Widget _buildTileWidget(BuildContext context, WordUiModel uiModel) {
     return Row(
       children: <Widget>[
         Text(
-          '$index',
+          '${uiModel.number}',
           style: Theme.CupertinoTheme.of(context).textTheme.caption1TextStyle,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Text(
-            'Item $index',
+            '${uiModel.title}',
             style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle,
           ),
         )
