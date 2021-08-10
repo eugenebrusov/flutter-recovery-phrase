@@ -20,6 +20,10 @@ class WordListBloc {
   void dispose() {
     // Release all the resources if any
   }
+
+  void retry() {
+    reloadSubject.add(null);
+  }
 }
 
 class WordUiModel {

@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recovery_phrase/bloc/wordlist/word_list_bloc.dart';
 import 'package:recovery_phrase/data/model/resource.dart';
@@ -48,10 +49,10 @@ class WordList extends StatelessWidget {
                             } else if (resource is Loading) {
                               return _buildWordListLoading(context);
                             } else if (resource is Error) {
-                              return _buildWordListLoading(context);
+                              return _buildWordListError(context, resource);
                             }
                           } else if (snapshot.hasError) {
-                            return _buildWordListLoading(context);
+                            return _buildWordListError(context, snapshot.error);
                           }
 
                           return _buildWordListLoading(context);
@@ -112,9 +113,29 @@ class WordList extends StatelessWidget {
   }
 
   Widget _buildWordListLoading(BuildContext context) {
-    return CupertinoActivityIndicator(
-      animating: true,
-      radius: 20.0,
+    return Center(
+      child: CupertinoActivityIndicator(
+        animating: true,
+        radius: 20.0,
+      ),
+    );
+  }
+
+  Widget _buildWordListError(BuildContext context, dynamic error) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+            AppLocalizations.unknownError,
+            style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
+        ),
+        CupertinoButton(
+          child: Text('Retry'),
+          onPressed: () {
+            Provider.of<WordListBloc>(context, listen: false).retry();
+          },
+        )
+      ],
     );
   }
 
