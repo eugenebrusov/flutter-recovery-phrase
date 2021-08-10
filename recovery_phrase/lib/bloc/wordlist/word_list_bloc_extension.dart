@@ -36,11 +36,16 @@ extension WordListBlocExtension on WordListBloc {
         if (resource is Success<List<String>>) {
           return Stream.fromIterable(List.generate(resource.data.length, (index) => index)..shuffle())
               .take(12)
-              .map((index) => WordDataModel(
-                number: 1,
-                title: resource.data[index]
-              ))
+              .map((index) => resource.data[index])
               .toList()
+              .then((words) {
+                return Stream.fromIterable(words)
+                    .map((word) => WordDataModel(
+                      number: words.indexOf(word) + 1,
+                      title: word
+                    ))
+                    .toList();
+              })
               .asStream()
               .map((dataModels) => Resource.success(data: dataModels))
               .onErrorReturnWith((error) => Resource.error(error: error));
