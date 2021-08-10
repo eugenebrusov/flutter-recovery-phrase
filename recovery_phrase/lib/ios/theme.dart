@@ -2,12 +2,17 @@
 import 'package:flutter/cupertino.dart' as System;
 import 'package:flutter/cupertino.dart';
 
+class CupertinoTheme extends System.CupertinoTheme {
+  static CupertinoThemeData of(System.BuildContext context) =>
+      System.CupertinoTheme.of(context) as CupertinoThemeData;
+}
+
 class CupertinoThemeData extends System.CupertinoThemeData {
   const CupertinoThemeData({
     Brightness brightness,
     Color primaryColor,
     Color primaryContrastingColor,
-    CupertinoTextThemeData textTheme = const CupertinoTextThemeData(),
+    CupertinoTextThemeData textTheme = _CupertinoTypography.textThemeData,
     Color barBackgroundColor,
     Color scaffoldBackgroundColor = _CupertinoColors.scaffoldBackground
   }) : super(
@@ -30,7 +35,7 @@ class CupertinoThemeData extends System.CupertinoThemeData {
 
 class CupertinoTextThemeData extends System.CupertinoTextThemeData {
   const CupertinoTextThemeData({
-    Color primaryColor = _CupertinoColors.scaffoldBackground,
+    Color primaryColor = _CupertinoColors.onScaffoldBackground100,
     TextStyle textStyle,
     TextStyle actionTextStyle,
     TextStyle tabLabelTextStyle,
@@ -38,7 +43,8 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
     TextStyle navLargeTitleTextStyle,
     TextStyle navActionTextStyle,
     TextStyle pickerTextStyle,
-    TextStyle dateTimePickerTextStyle
+    TextStyle dateTimePickerTextStyle,
+    @required this.largeTitleTextStyle
   }) : super(
       primaryColor: primaryColor,
       textStyle: textStyle,
@@ -49,23 +55,27 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
       navActionTextStyle: navActionTextStyle,
       pickerTextStyle: pickerTextStyle,
       dateTimePickerTextStyle: dateTimePickerTextStyle);
+
+  final TextStyle largeTitleTextStyle;
 }
 
 /// Defines text geometry
 ///
 /// The font sizes, weights, and letter spacings in this version match the
 /// [latest Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/).
-class CupertinoTypography {
-  CupertinoTypography._();
+class _CupertinoTypography {
+  _CupertinoTypography._();
 
-  static const TextStyle largeTitleTextStyle = TextStyle(
+  static const TextStyle _largeTitleTextStyle = TextStyle(
     color: _CupertinoColors.onScaffoldBackground100,
     fontSize: 28,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
   );
 
-  static const CupertinoTextThemeData iOS13 = CupertinoTextThemeData();
+  static const CupertinoTextThemeData textThemeData = CupertinoTextThemeData(
+    largeTitleTextStyle: _largeTitleTextStyle
+  );
 }
 
 class _CupertinoColors {
