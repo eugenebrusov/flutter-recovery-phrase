@@ -1,20 +1,23 @@
+
 import 'package:flutter/cupertino.dart' as System;
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:recovery_phrase/bloc/wordlist/word_list_bloc.dart';
-import 'package:recovery_phrase/data/source/repository.dart';
 import 'package:recovery_phrase/ios/theme.dart' as Theme;
 import 'package:recovery_phrase/ios/wordlist/word_list.dart';
+import 'package:recovery_phrase/localizations/localizations.dart';
 
 class CupertinoApp extends System.CupertinoApp {
   CupertinoApp() : super(
       debugShowCheckedModeBanner: false,
-      title: 'Recovery Phrase',
+      title: AppLocalizations.title,
       theme: const Theme.CupertinoThemeData(),
-      home: ProxyProvider<Repository, WordListBloc>(
-        update: (context, repository, previous) =>
-            WordListBloc(context: context, repository: repository),
-        dispose: (context, bloc) => bloc.dispose(),
-        child: WordList(),
+      home: Provider<WordListBloc>(
+        create: (context) => WordListBloc(context: context),
+        dispose: (_, bloc) => bloc.dispose(),
+        child: Builder(builder: (context) {
+          return WordList();
+        })
       ),
   );
 }
