@@ -10,7 +10,7 @@ class CupertinoTheme extends System.CupertinoTheme {
 class CupertinoThemeData extends System.CupertinoThemeData {
   const CupertinoThemeData({
     Brightness brightness,
-    Color primaryColor,
+    Color primaryColor = _CupertinoColors.primary,
     Color primaryContrastingColor,
     CupertinoTextThemeData textTheme = _CupertinoTypography.textThemeData,
     Color barBackgroundColor,
@@ -44,7 +44,8 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
     TextStyle navActionTextStyle,
     TextStyle pickerTextStyle,
     TextStyle dateTimePickerTextStyle,
-    @required this.largeTitleTextStyle
+    @required this.largeTitleTextStyle,
+    @required this.title1TextStyle,
   }) : super(
       primaryColor: primaryColor,
       textStyle: textStyle,
@@ -57,6 +58,7 @@ class CupertinoTextThemeData extends System.CupertinoTextThemeData {
       dateTimePickerTextStyle: dateTimePickerTextStyle);
 
   final TextStyle largeTitleTextStyle;
+  final TextStyle title1TextStyle;
 }
 
 /// Defines text geometry
@@ -73,15 +75,23 @@ class _CupertinoTypography {
     fontWeight: FontWeight.w500,
   );
 
+  static const TextStyle _title1TextStyle = TextStyle(
+    color: _CupertinoColors.onScaffoldBackground100,
+    fontSize: 16,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.normal,
+  );
+
   static const CupertinoTextThemeData textThemeData = CupertinoTextThemeData(
-    largeTitleTextStyle: _largeTitleTextStyle
+    largeTitleTextStyle: _largeTitleTextStyle,
+    title1TextStyle: _title1TextStyle,
   );
 }
 
 class _CupertinoColors {
   _CupertinoColors._();
 
+  static const Color primary = Color(0xFF05989A);
   static const Color scaffoldBackground = Color(0xFF0D1323);
-
   static const Color onScaffoldBackground100 = Color(0xFFFFFFFF);
 }
