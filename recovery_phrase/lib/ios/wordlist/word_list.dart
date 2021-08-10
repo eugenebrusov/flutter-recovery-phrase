@@ -1,12 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:recovery_phrase/ios/theme.dart';
 
 class WordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const CupertinoPageScaffold(
-      child: Center(
-        child: Text('Cucu'),
+    return CupertinoPageScaffold(
+      child: Container(
+        child: Text('Kuku'),
       ),
     );
   }
