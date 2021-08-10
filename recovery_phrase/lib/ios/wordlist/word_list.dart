@@ -133,16 +133,16 @@ class WordList extends StatelessWidget {
   Widget _buildTile(BuildContext context, WordItemUiModel uiModel) {
     return Row(
       children: <Widget>[
-        Text(
-          '${uiModel.number}',
-          style: Theme.CupertinoTheme.of(context).textTheme.caption1TextStyle,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+        SizedBox(
+          width: 24.0,
           child: Text(
-            '${uiModel.title}',
-            style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle,
+            '${uiModel.number}',
+            style: Theme.CupertinoTheme.of(context).textTheme.caption1TextStyle,
           ),
+        ),
+        Text(
+          '${uiModel.title}',
+          style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle,
         )
       ]
     );
