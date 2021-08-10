@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:recovery_phrase/ios/theme.dart' as Theme;
+import 'package:recovery_phrase/localizations/localizations.dart';
 
 class WordList extends StatelessWidget {
   @override
@@ -13,12 +14,15 @@ class WordList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                  'Write down your recovery phrase',
+                  AppLocalizations.writePhrase,
                   style: Theme.CupertinoTheme.of(context).textTheme.largeTitleTextStyle
               ),
-              Text(
-                  'The 12-word recovery phrase',
-                  style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Text(
+                    AppLocalizations.phraseDescription,
+                    style: Theme.CupertinoTheme.of(context).textTheme.title1TextStyle
+                ),
               ),
               Expanded(
                 child: Align(
