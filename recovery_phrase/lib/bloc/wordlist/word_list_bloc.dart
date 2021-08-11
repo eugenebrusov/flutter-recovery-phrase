@@ -10,13 +10,15 @@ class WordListBloc {
   }) : reloadSubject = PublishSubject(),
         wordsStream = buildWordsStream(),
         wordDataModelsStream = buildWordDataModelsStream(),
-        wordsUiModelStream = buildWordsUiModelStream();
+        wordsUiModelStream = buildWordsUiModelStream(),
+        confirmButtonUiModelStream = buildConfirmButtonUiModelStream();
 
   final BuildContext context;
   final PublishSubject<void> reloadSubject;
   final Stream<Resource<List<String>>> wordsStream;
   final Stream<Resource<List<WordDataModel>>> wordDataModelsStream;
   final Stream<WordsUiModel> wordsUiModelStream;
+  final Stream<ConfirmButtonUiModel> confirmButtonUiModelStream;
 
   void dispose() {
     reloadSubject.close();
@@ -73,3 +75,12 @@ class WordItemUiModel {
   final String title;
 }
 
+class ConfirmButtonUiModel {
+  ConfirmButtonUiModel({
+    @required this.title,
+    @required this.action,
+  });
+
+  final String title;
+  final Function action;
+}

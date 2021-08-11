@@ -60,12 +60,15 @@ class WordList extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: CupertinoButton.filled(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Text(AppLocalizations.confirmBackup),
-                          onPressed: () {
-
-                          },
+                        child: StreamBuilder<ConfirmButtonUiModel>(
+                          stream: Provider.of<WordListBloc>(context, listen: false).confirmButtonUiModelStream,
+                          builder: (context, snapshot) {
+                            return CupertinoButton.filled(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Text(snapshot.hasData ? snapshot.data.title : ''),
+                              onPressed: snapshot.hasData ? snapshot.data.action : null,
+                            );
+                          }
                         ),
                       ),
                     ],

@@ -83,6 +83,22 @@ extension WordListBlocExtension on WordListBloc {
         } else {
           return Future.value(WordsLoadingUiModel());
         }
-      })
-      .shareReplay(maxSize: 1);
+      });
+
+  Stream<ConfirmButtonUiModel> buildConfirmButtonUiModelStream() => wordDataModelsStream
+      .map((resource) {
+        if (resource is Success<List<WordDataModel>>) {
+          return ConfirmButtonUiModel(
+              title: AppLocalizations.confirmBackup,
+              action: () {
+                // TODO: Add navigation action
+              }
+          );
+        } else {
+          return ConfirmButtonUiModel(
+              title: AppLocalizations.confirmBackup,
+              action: null
+          );
+        }
+    });
 }
